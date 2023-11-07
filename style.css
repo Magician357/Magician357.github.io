@@ -114,7 +114,7 @@ hr.darkmode {
 }
 
 #content.darkmode a {
-    color: blue !important;
+    color: rgb(192, 192, 255) !important;
 }
 
 #content a:hover {
@@ -184,8 +184,8 @@ hr.darkmode {
     margin-left:10px;
 }
 
-.breaker {
-    border: 0.5px solid rgb(22, 22, 22);
+#content.darkmode .breaker {
+    border: 0.5px solid rgb(46, 46, 46) !important;
 }
 
 .flex-break {

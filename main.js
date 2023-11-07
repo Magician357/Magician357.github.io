@@ -17,7 +17,7 @@ async function getData(url){
 // set the main page content to the selected page
 const content=document.getElementById("content")
 async function setContent(name) {
-    console.log(name);
+    console.log(`started loading ${name}`);
     // const myRequest = new Request(`pages/${name}.html`);
     // fetch(myRequest)
     // .then((response) => response.text())
@@ -25,6 +25,7 @@ async function setContent(name) {
     //     content.innerHTML = text;
     // });
     content.innerHTML=await getData(`pages/${name}.html`);
+    console.log(`finished loading ${name}`);
 }
 
 // calculate height
@@ -67,11 +68,11 @@ async function changeContent(name){
 }
 
 window.addEventListener('offline', () => {
-    console.log('Became offline');
+    console.log('Offline');
     alert("Notice: Website will not work offline");
 });
 window.addEventListener('online', () => {
-    console.log('Became online');
+    console.log('Online');
     // alert("Back online");
 });
 
@@ -79,6 +80,7 @@ window.addEventListener('online', () => {
 var darkMode=false;
 function toggleDarkmode(){
     darkMode=!darkMode;
+    console.log(`Dark mode is on: ${darkMode}`);
     if (darkMode){
         document.querySelectorAll("*").forEach((element)=>{
             element.classList.add("darkmode");
@@ -94,7 +96,7 @@ function toggleDarkmode(){
 var transitionsOn = true;
 function toggleTransitions(){
     transitionsOn=!transitionsOn;
-    console.log(transitionsOn);
+    console.log(`Transitions are on: ${transitionsOn}`);
     if (transitionsOn){
         document.querySelectorAll("*").forEach((element)=>{
             element.classList.remove("notransition");
@@ -113,6 +115,6 @@ window.addEventListener("load", async (event) => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         toggleDarkmode(); // turn on dark mode
     }
-    setContent("home"); // set content to home
+    await setContent("home"); // set content to home
     toggleTransitions(); // turn back on transitions
 });
