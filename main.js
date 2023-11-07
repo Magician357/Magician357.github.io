@@ -29,16 +29,18 @@ const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
 async function changeContent(name){
     transitionElement.style.width=width+"px";
-    transitionElement.style.height=(height-header.offsetHeight)+"px";
+    transitionElement.style.height=Math.max((height-header.offsetHeight),content.offsetHeight+header.offsetHeight)+"px";
     transitionElement.style.top=header.offsetHeight+"px";
 
+    content.classList.add("closed");
     transitionElement.classList.remove("before");
     transitionElement.classList.add("during");
     await sleep(250);
-    
+
     setContent(name);
     transitionElement.classList.remove("during");
     transitionElement.classList.add("after");
+    content.classList.remove("closed");
     await sleep(250);
 
     transitionElement.classList.add("notransition");
