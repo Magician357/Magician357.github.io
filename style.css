@@ -27,6 +27,7 @@ body {
     /* margin: 10px; */
     /* background-color: lightblue; */
     top:0;
+    z-index: 10;
 }
 
 hr {
@@ -63,7 +64,7 @@ hr {
     /* box-shadow: -3px -2px 25px 9px rgba(161,166,255,0.86); */
 }
 
-#navbar a
+/* #navbar a */
 
 #content * {
     transition: opacity 250ms;
@@ -73,4 +74,30 @@ hr {
     transition: background-color 250ms;
     /* background-color:green; */
     margin-left: 10px;
+}
+
+#transition {
+    background: rgb(218, 218, 218);
+    width:10px;
+    height:10px;
+    position:absolute;
+    top:0;
+    transition: transform 250ms;
+    border-top: 2px solid black;
+}
+
+.before {
+    transform:translateX(-100vw);
+}
+
+.during {
+    transform:translateX(0);
+}
+
+.after {
+    transform:translateX(100vw);
+}
+
+.notransition {
+    transition: none !important;
 }

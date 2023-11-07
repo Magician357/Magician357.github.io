@@ -1,3 +1,9 @@
+const DEF_DELAY = 1000;
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
+}
+
 const content=document.getElementById("content")
 function setContent(name) {
     console.log(name);
@@ -11,8 +17,35 @@ function setContent(name) {
 
 window.addEventListener("load", async (event) => {
     setContent("styletest");
-}) 
+});
 
-function changeContent(name){
+var body = document.body,
+    html = document.documentElement;
+
+var height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+var width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  html.scrollWidth,  html.offsetWidth );
+
+const header=document.getElementById("header");
+const transitionElement=document.getElementById("transition");
+async function changeContent(name){
+    transitionElement.style.width=width+"px";
+    transitionElement.style.height=(height-header.offsetHeight)+"px";
+    transitionElement.style.top=header.offsetHeight+"px";
+
+    transitionElement.classList.remove("before");
+    transitionElement.classList.add("during");
+    await sleep(250);
     
+    setContent(name);
+    transitionElement.classList.remove("during");
+    transitionElement.classList.add("after");
+    await sleep(250);
+
+    transitionElement.classList.add("notransition");
+    transitionElement.offsetHeight;
+    await sleep(10);
+    transitionElement.classList.remove("after");
+    transitionElement.classList.add("before");
+    transitionElement.offsetHeight;
+    transitionElement.classList.remove("notransition");
 }
