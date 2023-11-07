@@ -71,3 +71,17 @@ window.addEventListener('online', () => {
     console.log('Became online');
     // alert("Back online");
 });
+
+var darkMode=false;
+function toggleDarkmode(){
+    darkMode=!darkMode;
+    if (darkMode){
+        document.querySelectorAll("*").forEach((element)=>{
+            element.classList.add("darkmode");
+        });
+    } else {
+        document.querySelectorAll("*").forEach((element)=>{
+            element.classList.remove("darkmode");
+        });
+    }
+}
