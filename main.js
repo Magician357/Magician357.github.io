@@ -1,9 +1,10 @@
+// sleep function
 const DEF_DELAY = 1000;
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
 }
 
+// get data from url
 async function getData(url){
     const curRequest = new Request(url);
     return fetch(curRequest)
@@ -13,6 +14,7 @@ async function getData(url){
         });
 }
 
+// set the main page content to the selected page
 const content=document.getElementById("content")
 async function setContent(name) {
     console.log(name);
@@ -25,37 +27,42 @@ async function setContent(name) {
     content.innerHTML=await getData(`pages/${name}.html`);
 }
 
+// calculate height
 var body = document.body,
     html = document.documentElement;
-
 const height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
 const width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  html.scrollWidth,  html.offsetWidth );
 
 const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
+// function to play transition and switch content
 async function changeContent(name){
+    // set transition size to what is required
     transitionElement.style.width=width+"px";
     transitionElement.style.height=Math.max((height-header.offsetHeight),content.offsetHeight+header.offsetHeight)+"px";
     transitionElement.style.top=header.offsetHeight+"px";
 
+    // play intro animation
     content.classList.add("closed");
     transitionElement.classList.remove("before");
     transitionElement.classList.add("during");
     await sleep(250);
 
+    // set content
     await setContent(name);
-    // await sleep(100);
+    // play outro animation
     transitionElement.classList.remove("during");
     transitionElement.classList.add("after");
     content.classList.remove("closed");
     await sleep(250);
 
+    // reset to start position
     transitionElement.classList.add("notransition");
-    transitionElement.offsetHeight;
+    transitionElement.offsetHeight; // update css
     await sleep(10);
     transitionElement.classList.remove("after");
     transitionElement.classList.add("before");
-    transitionElement.offsetHeight;
+    transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
 }
 
@@ -68,6 +75,7 @@ window.addEventListener('online', () => {
     // alert("Back online");
 });
 
+// function to toggle dark mode on and off
 var darkMode=false;
 function toggleDarkmode(){
     darkMode=!darkMode;
@@ -82,30 +90,29 @@ function toggleDarkmode(){
     }
 }
 
-// var transitionsOn = true;
-// function toggleTransitions(){
-//     transitionsOn=!transitionsOn;
-//     console.log(transitionsOn);
-//     if (transitionsOn){
-//         document.querySelectorAll("*").forEach((element)=>{
-//             element.classList.remove("notransition");
-//         });
-//     } else {
-//         document.querySelectorAll("*").forEach((element)=>{
-//             element.classList.add("notransition");
-//             console.log(element.classList);
-//         });
-//     }
-// }
+// toggle all transitions on and off
+var transitionsOn = true;
+function toggleTransitions(){
+    transitionsOn=!transitionsOn;
+    console.log(transitionsOn);
+    if (transitionsOn){
+        document.querySelectorAll("*").forEach((element)=>{
+            element.classList.remove("notransition");
+            element.offsetHeight; // update css
+        });
+    } else {
+        document.querySelectorAll("*").forEach((element)=>{
+            element.classList.add("notransition");
+            element.offsetHeight; // update css
+        });
+    }
+}
 
 window.addEventListener("load", async (event) => {
-    // toggleTransitions();
+    toggleTransitions(); // turn off transitions
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        toggleDarkmode();
+        toggleDarkmode(); // turn on dark mode
     }
-    setContent("home");
-    // toggleTransitions();
-    // document.querySelectorAll("*").forEach((element)=>{
-    //     element.style.display="block";
-    // });
+    setContent("home"); // set content to home
+    toggleTransitions(); // turn back on transitions
 });
