@@ -7,6 +7,10 @@
     font-stretch: 75% 125%;
 }
 
+/* * {
+    display:none;
+} */
+
 html {
     font-family: 'Mona Sans';
 }
