@@ -35,13 +35,13 @@ async function changeContent(name){
     content.classList.add("closed");
     transitionElement.classList.remove("before");
     transitionElement.classList.add("during");
-    await sleep(300);
+    await sleep(250);
 
     setContent(name);
     transitionElement.classList.remove("during");
     transitionElement.classList.add("after");
     content.classList.remove("closed");
-    await sleep(250);
+    await sleep(350);
 
     transitionElement.classList.add("notransition");
     transitionElement.offsetHeight;
