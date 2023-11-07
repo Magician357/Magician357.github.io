@@ -35,7 +35,7 @@ async function changeContent(name){
     content.classList.add("closed");
     transitionElement.classList.remove("before");
     transitionElement.classList.add("during");
-    await sleep(250);
+    await sleep(300);
 
     setContent(name);
     transitionElement.classList.remove("during");
