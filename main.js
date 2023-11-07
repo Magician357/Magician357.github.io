@@ -4,15 +4,25 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms || DEF_DELAY));
 }
 
+async function getData(url){
+    const curRequest = new Request(url);
+    return fetch(curRequest)
+        .then((response)=>response.text())
+        .then((text) => {
+            return text
+        });
+}
+
 const content=document.getElementById("content")
-function setContent(name) {
+async function setContent(name) {
     console.log(name);
-    const myRequest = new Request(`pages/${name}.html`);
-    fetch(myRequest)
-    .then((response) => response.text())
-    .then((text) => {
-        content.innerHTML = text;
-    });
+    // const myRequest = new Request(`pages/${name}.html`);
+    // fetch(myRequest)
+    // .then((response) => response.text())
+    // .then((text) => {
+    //     content.innerHTML = text;
+    // });
+    content.innerHTML=await getData(`pages/${name}.html`);
 }
 
 window.addEventListener("load", async (event) => {
@@ -37,11 +47,12 @@ async function changeContent(name){
     transitionElement.classList.add("during");
     await sleep(250);
 
-    setContent(name);
+    await setContent(name);
+    // await sleep(100);
     transitionElement.classList.remove("during");
     transitionElement.classList.add("after");
     content.classList.remove("closed");
-    await sleep(350);
+    await sleep(250);
 
     transitionElement.classList.add("notransition");
     transitionElement.offsetHeight;
@@ -51,3 +62,12 @@ async function changeContent(name){
     transitionElement.offsetHeight;
     transitionElement.classList.remove("notransition");
 }
+
+window.addEventListener('offline', () => {
+    console.log('Became offline');
+    alert("Notice: Website will not work offline");
+});
+window.addEventListener('online', () => {
+    console.log('Became online');
+    // alert("Back online");
+});
