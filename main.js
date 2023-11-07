@@ -16,7 +16,7 @@ function setContent(name) {
 }
 
 window.addEventListener("load", async (event) => {
-    setContent("styletest");
+    setContent("home");
 });
 
 var body = document.body,
