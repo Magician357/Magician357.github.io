@@ -36,8 +36,16 @@ const width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,
 
 const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
+var running=false
 // function to play transition and switch content
 async function changeContent(name){
+
+    if (running){
+        return;
+    }
+
+    running=true;
+
     // set transition size to what is required
     transitionElement.style.width=width+"px";
     transitionElement.style.height=Math.max((height-header.offsetHeight),content.offsetHeight+header.offsetHeight)+"px";
@@ -65,6 +73,8 @@ async function changeContent(name){
     transitionElement.classList.add("before");
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
+
+    running=false;
 }
 
 window.addEventListener('offline', () => {
