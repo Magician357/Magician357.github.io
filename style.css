@@ -77,6 +77,13 @@ hr.darkmode {
     transition: color 300ms, box-shadow 300ms;
 }
 
+#navbar a.activeLink:not(.darkmode), #navbar a.activeLink:not(.darkmode):hover {
+    color: rgb(0, 13, 255) !important;
+}
+
+#navbar a.activeLink.darkmode, #navbar a.activeLink.darkmode:hover {
+    color: rgb(163, 168, 255) !important;
+}
 
 #navbar:hover a{
     color: rgb(0, 4, 115);

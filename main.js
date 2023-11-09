@@ -26,6 +26,7 @@ async function setContent(name) {
     // });
     content.innerHTML=await getData(`pages/${name}.html`);
     console.log(`finished loading ${name}`);
+    curContent=name;
 }
 
 // calculate height
@@ -37,6 +38,7 @@ const width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,
 const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
 var running=false
+var curContent="home";
 // function to play transition and switch content
 async function changeContent(name){
     console.log("");
@@ -48,7 +50,16 @@ async function changeContent(name){
         return;
     }
 
+    if (name===curContent){
+        console.log("animation cancelled: already on page");
+        console.log("");
+        return;
+    }
+
     running=true;
+
+    document.getElementById(`${name}Nav`).classList.add("activeLink");
+    document.getElementById(`${curContent}Nav`).classList.remove("activeLink");
 
     // set transition size to what is required
     transitionElement.style.width=width+"px";
