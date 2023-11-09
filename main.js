@@ -39,8 +39,12 @@ const transitionElement=document.getElementById("transition");
 var running=false
 // function to play transition and switch content
 async function changeContent(name){
+    console.log("");
+    console.log(`animation starting for ${name}`);
 
     if (running){
+        console.log("animation cancelled: animation already running");
+        console.log("");
         return;
     }
 
@@ -75,6 +79,7 @@ async function changeContent(name){
     transitionElement.classList.remove("notransition");
 
     running=false;
+    console.log(`animation finished for ${name}`)
 }
 
 window.addEventListener('offline', () => {
@@ -121,10 +126,14 @@ function toggleTransitions(){
 }
 
 window.addEventListener("load", async (event) => {
+    console.log("DOCUMENT LOADED");
     toggleTransitions(); // turn off transitions
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        console.log("darkmode detected");
         toggleDarkmode(); // turn on dark mode
     }
     await setContent("home"); // set content to home
     toggleTransitions(); // turn back on transitions
+    console.log("FINISHED LOADING");
+    console.log("");
 });
