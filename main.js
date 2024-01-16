@@ -24,6 +24,14 @@ async function setContent(name) {
     // .then((text) => {
     //     content.innerHTML = text;
     // });
+
+    if (!isonline){
+        console.log("loading failed: not online");
+        alert("Loading has failed. Please check your internet connection");
+        location.reload(); // refresh page to make sure it doesnt break
+        return;
+    }
+
     content.innerHTML=await getData(`pages/${name}.html`);
     console.log(`finished loading ${name}`);
     curContent=name;
@@ -39,6 +47,7 @@ const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
 var running=false
 var curContent="home";
+var funny_counter=0;
 // function to play transition and switch content
 async function changeContent(name){
     console.log("");
@@ -51,12 +60,38 @@ async function changeContent(name){
     }
 
     if (name===curContent){
+        funny_counter++;
         console.log("animation cancelled: already on page");
+        console.log(`button has been pressed ${funny_counter} times`);
+        if (funny_counter>20&&funny_counter<50) {
+            if (Math.random()>0.5){
+                alert(`please stop you have pressed it ${funny_counter} times already`);
+            }
+        }
+
+        if (funny_counter===20){
+            alert("you're already on this page stop pressing the button");
+        }
+
+        if (funny_counter>=50) {
+            alert("thats it");
+            changeContent("secret");
+            document.getElementById(`${curContent}Nav`).remove();
+            document.getElementById("secretNav").style.display="block";
+        }
+        return;
+    }
+    funny_counter=0;
+
+    if (!isonline){
+        console.log("animation cancelled: not online");
+        alert("The page cannot load because you are offline.");
         console.log("");
         return;
     }
 
     running=true;
+    const start= Date.now();
 
     document.getElementById(`${name}Nav`).classList.add("activeLink");
     document.getElementById(`${curContent}Nav`).classList.remove("activeLink");
@@ -67,6 +102,7 @@ async function changeContent(name){
     transitionElement.style.top=header.offsetHeight+"px";
 
     // play intro animation
+    console.log("intro playing");
     content.classList.add("closed");
     transitionElement.classList.remove("before");
     transitionElement.classList.add("during");
@@ -74,32 +110,41 @@ async function changeContent(name){
 
     // set content
     await setContent(name);
+
     // play outro animation
+    console.log("outro playing");
     transitionElement.classList.remove("during");
     transitionElement.classList.add("after");
     content.classList.remove("closed");
     await sleep(250);
 
     // reset to start position
+    console.log("resetting to start position");
     transitionElement.classList.add("notransition");
     transitionElement.offsetHeight; // update css
-    await sleep(10);
+    await sleep(10); // wait a little to ensure
     transitionElement.classList.remove("after");
     transitionElement.classList.add("before");
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
 
+    time_elapsed=Date.now()-start
     running=false;
     console.log(`animation finished for ${name}`)
+    console.log(`Elapsed time: ${time_elapsed} (${time_elapsed-510} without waiting)`)
 }
+
+var isonline=true;
 
 window.addEventListener('offline', () => {
     console.log('Offline');
     alert("Notice: Website will not work offline");
+    isonline=false
 });
 window.addEventListener('online', () => {
     console.log('Online');
     // alert("Back online");
+    isonline=true
 });
 
 // function to toggle dark mode on and off
