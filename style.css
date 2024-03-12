@@ -195,6 +195,7 @@ hr.darkmode {
     top:0;
     transition: transform 250ms;
     border-top: 2px solid black;
+    overflow: hidden;
 }
 
 #transition.darkmode {
@@ -202,11 +203,31 @@ hr.darkmode {
     border-top: 2px solid white;
 }
 
+#loading-text {
+    position: static;
+    top: 50px;
+    font-size: 100px;
+    transition: transform 250ms;
+    color: rgb(225, 225, 225);
+}
+
+#loading-text.darkmode {
+    color: rgb(24, 24, 24);
+}
+
 .before {
     transform:translateX(-100vw);
 }
 
+.before #loading-text {
+    transform:translateX(100vw);
+}
+
 .during {
+    transform:translateX(0);
+}
+
+.during #loading-text {
     transform:translateX(0);
 }
 
@@ -214,7 +235,11 @@ hr.darkmode {
     transform:translateX(120vw);
 }
 
-.notransition {
+.after #loading-text{
+    transform:translateX(-120vw);
+}
+
+.notransition, .notransition #loading-text {
     transition: none !important;
 }
 
