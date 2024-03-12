@@ -35,6 +35,11 @@ async function setContent(name) {
     content.innerHTML=await getData(`pages/${name}.html`);
     console.log(`finished loading ${name}`);
     curContent=name;
+    
+    // headerFontChanger.running=false;
+    headerFontChanger.elements=document.querySelectorAll("#content h2");
+    // headerFontChanger.running=true;
+    // headerFontChanger.changeFont();
 }
 
 // calculate height
@@ -127,11 +132,6 @@ async function changeContent(name){
     transitionElement.classList.add("before");
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
-
-    headerFontChanger.running=false;
-    headerFontChanger.elements=document.querySelectorAll("#content h2");
-    headerFontChanger.running=true;
-    headerFontChanger.changeFont();
 
     time_elapsed=Date.now()-start
     running=false;
@@ -243,5 +243,5 @@ function fontChanger(elements,delay){
 const title = document.querySelectorAll(".header-letter");
 const titleFontChanger = new fontChanger(title,750);
 titleFontChanger.changeFont();
-const headerFontChanger = new fontChanger(document.querySelectorAll("#content h2"),3500);
+const headerFontChanger = new fontChanger(document.querySelectorAll("#content h2"),1000);
 headerFontChanger.changeFont();
