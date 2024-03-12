@@ -215,7 +215,7 @@ function changeFont(){
 }
 
 function waitFont(){
-    if (fontChanging && window.screen.width > 670){
+    if (fontChanging && window.screen.width > 670 && transitionsOn){
         setTimeout(changeFont, 750);
     } else {
         title.forEach((curTitle)=> {
