@@ -44,13 +44,23 @@ body.darkmode {
 
 #header-title-container {
     /* width:fit-content; */
-    height: 150px;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 3vw;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1vh;
 }
 
 @media only screen and (max-width:670px){
-    #header-title-container {
-        height: fit-content;
+    #header-title-container, .header-letter {
+        display:inline;
     }
+
+    /* .title-break{
+        flex-basis:100%;
+    } */
 }
 
 #header.darkmode {
@@ -70,7 +80,7 @@ hr.darkmode {
 #header #header-title-container h1 {
     font-size: 100px;
     font-stretch: 200%;
-    letter-spacing: 1vw;
+    /* letter-spacing: 1vw; */
 }
 
 #header h1.darkmode {

@@ -196,13 +196,15 @@ window.addEventListener("load", async (event) => {
 
 const baseFonts=["Courier Prime","Source Code Pro","Nothing You Could Do","Whisper","Mona Sans"];
 var fonts = [...baseFonts];
-const title = document.getElementById("header-title");
+const title = document.querySelectorAll(".header-letter");
 var fontChanging = true;
 function changeFont(){
     let index = Math.floor(Math.random() * fonts.length);
     let newFont=fonts[index];   
     // console.log(newFont);
-    title.style.fontFamily=newFont;
+    title.forEach((curTitle)=> {
+        curTitle.style.fontFamily=newFont;
+    })
     fonts.splice(index,1);
     if (fonts.length === 0) {
         fonts=[...baseFonts];
@@ -216,7 +218,9 @@ function waitFont(){
     if (fontChanging && window.screen.width > 670){
         setTimeout(changeFont, 750);
     } else {
-        title.style.fontFamily="Mona Sans";
+        title.forEach((curTitle)=> {
+            curTitle.style.fontFamily="Mona Sans";
+        })
         setTimeout(waitFont,1500);
     }
 }
