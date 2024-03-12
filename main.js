@@ -35,6 +35,11 @@ async function setContent(name) {
     content.innerHTML=await getData(`pages/${name}.html`);
     console.log(`finished loading ${name}`);
     curContent=name;
+    
+    // headerFontChanger.running=false;
+    headerFontChanger.elements=document.querySelectorAll("#content h2");
+    // headerFontChanger.running=true;
+    // headerFontChanger.changeFont();
 }
 
 // calculate height
@@ -174,7 +179,7 @@ function toggleTransitions(){
             element.offsetHeight; // update css
         });
     } else {
-        document.querySelectorAll("*").forEach((element)=>{
+        document.querySelectorAll("*").forEach((element)=>{ 
             element.classList.add("notransition");
             element.offsetHeight; // update css
         });
@@ -192,4 +197,51 @@ window.addEventListener("load", async (event) => {
     toggleTransitions(); // turn back on transitions
     console.log("FINISHED LOADING");
     console.log("");
+    // headerFontChanger.changeFont();
 });
+
+const baseFonts=["Courier Prime","Source Code Pro","Nothing You Could Do","Whisper","Mona Sans"];
+var fonts = [...baseFonts];
+
+function fontChanger(elements,delay){
+    console.log("Font changer element initialized");
+
+    this.elements=elements;
+    this.delay=delay;
+
+    this.running=true;
+
+    this.curFonts=[...baseFonts];
+
+    this.changeFont=() => {
+        let index = Math.floor(Math.random() * this.curFonts.length);
+        let newFont=this.curFonts[index];
+        this.elements.forEach((element)=>{
+            element.style.fontFamily=newFont;
+        });
+        this.curFonts.splice(index,1);
+        if (this.curFonts.length === 0){
+            this.curFonts=[...baseFonts];
+            this.curFonts.splice(this.curFonts.indexOf(newFont),1);
+        }
+        this.waitFont();
+    }
+
+    this.waitFont=() => {
+        if (this.running && window.screen.width > 670 && transitionsOn){
+            setTimeout(this.changeFont, delay);
+        } else {
+            this.elements.forEach((curTitle)=> {
+                curTitle.style.fontFamily="Mona Sans";
+            })
+            setTimeout(this.waitFont,delay*2);
+        }
+    }
+}
+
+
+const title = document.querySelectorAll(".header-letter");
+const titleFontChanger = new fontChanger(title,750);
+titleFontChanger.changeFont();
+const headerFontChanger = new fontChanger(document.querySelectorAll("#content h2"),1000);
+headerFontChanger.changeFont();
