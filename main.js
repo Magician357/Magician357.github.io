@@ -128,6 +128,11 @@ async function changeContent(name){
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
 
+    headerFontChanger.running=false;
+    headerFontChanger.elements=document.querySelectorAll("#content h2");
+    headerFontChanger.running=true;
+    headerFontChanger.changeFont();
+
     time_elapsed=Date.now()-start
     running=false;
     console.log(`animation finished for ${name}`)
@@ -174,7 +179,7 @@ function toggleTransitions(){
             element.offsetHeight; // update css
         });
     } else {
-        document.querySelectorAll("*").forEach((element)=>{
+        document.querySelectorAll("*").forEach((element)=>{ 
             element.classList.add("notransition");
             element.offsetHeight; // update css
         });
@@ -192,36 +197,51 @@ window.addEventListener("load", async (event) => {
     toggleTransitions(); // turn back on transitions
     console.log("FINISHED LOADING");
     console.log("");
+    // headerFontChanger.changeFont();
 });
 
 const baseFonts=["Courier Prime","Source Code Pro","Nothing You Could Do","Whisper","Mona Sans"];
 var fonts = [...baseFonts];
-const title = document.querySelectorAll(".header-letter");
-var fontChanging = true;
-function changeFont(){
-    let index = Math.floor(Math.random() * fonts.length);
-    let newFont=fonts[index];   
-    // console.log(newFont);
-    title.forEach((curTitle)=> {
-        curTitle.style.fontFamily=newFont;
-    })
-    fonts.splice(index,1);
-    if (fonts.length === 0) {
-        fonts=[...baseFonts];
-        fonts.splice(fonts.indexOf(newFont),1);
-        // console.log(fonts);
+
+function fontChanger(elements,delay){
+    console.log("Font changer element initialized");
+
+    this.elements=elements;
+    this.delay=delay;
+
+    this.running=true;
+
+    this.curFonts=[...baseFonts];
+
+    this.changeFont=() => {
+        let index = Math.floor(Math.random() * this.curFonts.length);
+        let newFont=this.curFonts[index];
+        this.elements.forEach((element)=>{
+            element.style.fontFamily=newFont;
+        });
+        this.curFonts.splice(index,1);
+        if (this.curFonts.length === 0){
+            this.curFonts=[...baseFonts];
+            this.curFonts.splice(this.curFonts.indexOf(newFont),1);
+        }
+        this.waitFont();
     }
-    waitFont();
+
+    this.waitFont=() => {
+        if (this.running && window.screen.width > 670 && transitionsOn){
+            setTimeout(this.changeFont, delay);
+        } else {
+            this.elements.forEach((curTitle)=> {
+                curTitle.style.fontFamily="Mona Sans";
+            })
+            setTimeout(this.waitFont,delay*2);
+        }
+    }
 }
 
-function waitFont(){
-    if (fontChanging && window.screen.width > 670 && transitionsOn){
-        setTimeout(changeFont, 750);
-    } else {
-        title.forEach((curTitle)=> {
-            curTitle.style.fontFamily="Mona Sans";
-        })
-        setTimeout(waitFont,1500);
-    }
-}
-changeFont();
+
+const title = document.querySelectorAll(".header-letter");
+const titleFontChanger = new fontChanger(title,750);
+titleFontChanger.changeFont();
+const headerFontChanger = new fontChanger(document.querySelectorAll("#content h2"),3500);
+headerFontChanger.changeFont();
