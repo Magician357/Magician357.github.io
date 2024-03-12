@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Nothing+You+Could+Do&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Whisper&display=swap');
+
 @font-face {
     font-family: 'Mona Sans';
     src:
@@ -40,6 +42,17 @@ body.darkmode {
     z-index: 10;
 }
 
+#header-title-container {
+    /* width:fit-content; */
+    height: 150px;
+}
+
+@media only screen and (max-width:670px){
+    #header-title-container {
+        height: fit-content;
+    }
+}
+
 #header.darkmode {
     border: 1px solid black;
     border-bottom: 4px solid white;
@@ -54,8 +67,8 @@ hr.darkmode {
     border-bottom: 1px white solid;
 }
 
-#header h1 {
-    font-size:100px;
+#header #header-title-container h1 {
+    font-size: 100px;
     font-stretch: 200%;
     letter-spacing: 1vw;
 }

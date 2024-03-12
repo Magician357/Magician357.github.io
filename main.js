@@ -193,3 +193,31 @@ window.addEventListener("load", async (event) => {
     console.log("FINISHED LOADING");
     console.log("");
 });
+
+const baseFonts=["Courier Prime","Source Code Pro","Nothing You Could Do","Whisper","Mona Sans"];
+var fonts = [...baseFonts];
+const title = document.getElementById("header-title");
+var fontChanging = true;
+function changeFont(){
+    let index = Math.floor(Math.random() * fonts.length);
+    let newFont=fonts[index];   
+    // console.log(newFont);
+    title.style.fontFamily=newFont;
+    fonts.splice(index,1);
+    if (fonts.length === 0) {
+        fonts=[...baseFonts];
+        fonts.splice(fonts.indexOf(newFont),1);
+        // console.log(fonts);
+    }
+    waitFont();
+}
+
+function waitFont(){
+    if (fontChanging && window.screen.width > 670){
+        setTimeout(changeFont, 750);
+    } else {
+        title.style.fontFamily="Mona Sans";
+        setTimeout(waitFont,1500);
+    }
+}
+changeFont();
