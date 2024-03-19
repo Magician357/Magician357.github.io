@@ -42,9 +42,12 @@ body.darkmode {
     z-index: 10;
 }
 
+#header-container2, #header-title-container{
+    height: 200px;
+}
+
 #header-title-container {
     /* width:fit-content; */
-    height: 200px;
     display: flex;
     flex-direction: row;
     column-gap: 3vw;
@@ -53,9 +56,13 @@ body.darkmode {
     row-gap: 1vh;
 }
 
-@media only screen and (max-width:670px){
+@media only screen and (max-width:800px){
     #header-title-container, .header-letter {
         display:inline;
+    }
+
+    #header-container2 {
+        height:275px;
     }
 
     /* .title-break{
@@ -215,7 +222,7 @@ hr.darkmode {
     color: rgb(24, 24, 24);
 }
 
-.before {
+/* .before {
     transform:translateX(-100vw);
 }
 
@@ -237,7 +244,7 @@ hr.darkmode {
 
 .after #loading-text{
     transform:translateX(-120vw);
-}
+} */
 
 .notransition, .notransition #loading-text {
     transition: none !important;
