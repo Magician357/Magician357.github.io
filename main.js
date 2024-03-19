@@ -140,9 +140,9 @@ async function changeContent(name){
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
 
-    history.pushState(name,null,`?page=${name}`)
+    history.pushState(name,null,`?page=${name}`);
 
-    time_elapsed=Date.now()-start
+    time_elapsed=Date.now()-start;
     running=false;
     console.log(`animation finished for ${name}`)
     console.log(`Elapsed time: ${time_elapsed} (${time_elapsed-510} without waiting)`)
@@ -261,3 +261,9 @@ const titleFontChanger = new fontChanger(title,750);
 titleFontChanger.changeFont();
 const headerFontChanger = new fontChanger(document.querySelectorAll("#content h2"),1000);
 headerFontChanger.changeFont();
+
+async function reset_page(){
+    running=false;
+    await history.pushState("home",null,`?page=home`);
+    location.reload();
+}
