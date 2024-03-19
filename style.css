@@ -209,7 +209,7 @@ hr.darkmode {
     border-top: 2px solid white;
 }
 
-.before {
+/* .before {
     transform:translateX(-100vw);
 }
 
@@ -219,7 +219,7 @@ hr.darkmode {
 
 .after {
     transform:translateX(120vw);
-}
+} */
 
 .notransition {
     transition: none !important;

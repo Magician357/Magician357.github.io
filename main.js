@@ -45,8 +45,8 @@ async function setContent(name) {
 // calculate height
 var body = document.body,
     html = document.documentElement;
-const height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-const width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  html.scrollWidth,  html.offsetWidth );
+var height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+var width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  html.scrollWidth,  html.offsetWidth );
 
 const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
@@ -96,6 +96,8 @@ async function changeContent(name){
     }
 
     running=true;
+    var height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight,document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    var width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  html.scrollWidth,  html.offsetWidth, document.documentElement.clientWidth || 0, window.innerWidth || 0);
     const start= Date.now();
 
     document.getElementById(`${name}Nav`).classList.add("activeLink");
@@ -109,8 +111,9 @@ async function changeContent(name){
     // play intro animation
     console.log("intro playing");
     content.classList.add("closed");
-    transitionElement.classList.remove("before");
-    transitionElement.classList.add("during");
+    // transitionElement.classList.remove("before");
+    // transitionElement.classList.add("during");
+    transitionElement.style.transform="translateX(0)";
     await sleep(250);
 
     // set content
@@ -118,8 +121,9 @@ async function changeContent(name){
 
     // play outro animation
     console.log("outro playing");
-    transitionElement.classList.remove("during");
-    transitionElement.classList.add("after");
+    // transitionElement.classList.remove("during");
+    // transitionElement.classList.add("after");
+    transitionElement.style.transform=`translateX(${1.2*width}px)`;
     content.classList.remove("closed");
     await sleep(250);
 
@@ -128,8 +132,8 @@ async function changeContent(name){
     transitionElement.classList.add("notransition");
     transitionElement.offsetHeight; // update css
     await sleep(10); // wait a little to ensure
-    transitionElement.classList.remove("after");
-    transitionElement.classList.add("before");
+    // transitionElement.classList.remove("after");
+    transitionElement.style.transform=`translateX(-${width}px)`// transitionElement.classList.add("before");
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
 
@@ -238,7 +242,6 @@ function fontChanger(elements,delay){
         }
     }
 }
-
 
 const title = document.querySelectorAll(".header-letter");
 const titleFontChanger = new fontChanger(title,750);
