@@ -50,6 +50,7 @@ var width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  
 
 const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
+const loadingText=document.getElementById("loading-text");
 var running=false
 var curContent="home";
 var funny_counter=0;
@@ -114,6 +115,7 @@ async function changeContent(name){
     // transitionElement.classList.remove("before");
     // transitionElement.classList.add("during");
     transitionElement.style.transform="translateX(0)";
+    loadingText.style.transform="translateX(0)";
     await sleep(250);
 
     // set content
@@ -124,6 +126,7 @@ async function changeContent(name){
     // transitionElement.classList.remove("during");
     // transitionElement.classList.add("after");
     transitionElement.style.transform=`translateX(${1.2*width}px)`;
+    loadingText.style.transform=`translateX(-${1.2*width}px)`;
     content.classList.remove("closed");
     await sleep(250);
 
@@ -134,6 +137,7 @@ async function changeContent(name){
     await sleep(10); // wait a little to ensure
     // transitionElement.classList.remove("after");
     transitionElement.style.transform=`translateX(-${width}px)`// transitionElement.classList.add("before");
+    loadingText.style.transform=`translateX(${width}px)`;
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
 
