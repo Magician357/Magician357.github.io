@@ -24,7 +24,7 @@ body {
     margin: 0px !important;
     transition: background-color 250ms;
 }
-
+    
 
 body.darkmode {
     background-color: black;
