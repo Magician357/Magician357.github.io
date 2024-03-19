@@ -228,7 +228,7 @@ function fontChanger(elements,delay){
     }
 
     this.waitFont=() => {
-        if (this.running && window.screen.width > 670 && transitionsOn){
+        if (this.running && window.screen.width > 800 && transitionsOn){
             setTimeout(this.changeFont, delay);
         } else {
             this.elements.forEach((curTitle)=> {
