@@ -29,7 +29,7 @@
         </div></div>
         <hr>
         <div id="navbar">
-            <a id="homeNav" href="javascript:changeContent('home')" class="activeLink">Home</a>
+            <a id="homeNav" href="javascript:changeContent('home')">Home</a>
             <a id="aboutNav" href="javascript:changeContent('about')">About</a>
             <a id="workNav" href="javascript:changeContent('work')" class="middle">Work</a>
             <a id="contactNav" href="javascript:changeContent('contact')">Contact</a>
@@ -39,10 +39,10 @@
         <br>
     </div>
     <div id="content" class="main-section"></div>
-    <div id="transition" style="transform:translateX(-100vw)>
-        <h1 id="loading-text">Loading...</h1>
+    <div id="transition" style="transform:translateX(-100vw)">
+        <h1 id="loading-text" style="transform:translateX(100vw)">Loading...</h1>
     </div>
-
+)
     <button id="toggleDarkMode" onclick="toggleDarkmode();">Toggle Dark Mode</button>
     <script src="main.js"></script>
 </body>

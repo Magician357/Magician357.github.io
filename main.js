@@ -50,6 +50,7 @@ var width  = Math.max( body.scrollWidth,  body.offsetWidth,  html.clientWidth,  
 
 const header=document.getElementById("header");
 const transitionElement=document.getElementById("transition");
+const loadingText=document.getElementById("loading-text");
 var running=false
 var curContent="home";
 var funny_counter=0;
@@ -114,6 +115,7 @@ async function changeContent(name){
     // transitionElement.classList.remove("before");
     // transitionElement.classList.add("during");
     transitionElement.style.transform="translateX(0)";
+    loadingText.style.transform="translateX(0)";
     await sleep(250);
 
     // set content
@@ -124,6 +126,7 @@ async function changeContent(name){
     // transitionElement.classList.remove("during");
     // transitionElement.classList.add("after");
     transitionElement.style.transform=`translateX(${1.2*width}px)`;
+    loadingText.style.transform=`translateX(-${1.2*width}px)`;
     content.classList.remove("closed");
     await sleep(250);
 
@@ -132,10 +135,12 @@ async function changeContent(name){
     transitionElement.classList.add("notransition");
     transitionElement.offsetHeight; // update css
     await sleep(10); // wait a little to ensure
-    // transitionElement.classList.remove("after");
-    transitionElement.style.transform=`translateX(-${width}px)`// transitionElement.classList.add("before");
+    transitionElement.style.transform=`translateX(-${width}px)`
+    loadingText.style.transform=`translateX(${width}px)`;
     transitionElement.offsetHeight; // update css
     transitionElement.classList.remove("notransition");
+
+    history.pushState(name,null,`?page=${name}`)
 
     time_elapsed=Date.now()-start
     running=false;
@@ -197,7 +202,15 @@ window.addEventListener("load", async (event) => {
         console.log("darkmode detected");
         toggleDarkmode(); // turn on dark mode
     }
-    await setContent("home"); // set content to home
+    let page = ""
+    if (history.state) {page=history.state}
+    else {
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has("page")){page=searchParams.get("page")}
+        else{page="home"}
+    }
+    await setContent(page);
+    document.getElementById(`${page}Nav`).classList.add("activeLink");
     toggleTransitions(); // turn back on transitions
     console.log("FINISHED LOADING");
     console.log("");
