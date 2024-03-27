@@ -62,12 +62,19 @@ body.darkmode {
     }
 
     #header-container2 {
-        height:275px;
+        height:fit-content;
     }
 
     /* .title-break{
         flex-basis:100%;
     } */
+}
+
+
+@media only screen and (max-width:540px){
+    #header-title-container h1 {
+        font-size: 15vw !important;
+    }
 }
 
 #header.darkmode {
