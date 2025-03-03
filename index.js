@@ -99,29 +99,34 @@ const notransition = [
 ]
 
 function cycle_buttons(which=0){
-    for (const button of next_div.children){
-        if (button.id === "long"){
-            continue;
+    if (!scrolling){
+        scrolling=true;
+        for (const button of next_div.children){
+            if (button.id === "long"){
+                continue;
+            }
+            let current_class = button.className.split(' ')[0];
+            button.classList.add(to_cycle[which][current_class]);
+            button.classList.remove(current_class);
+            button.classList.remove("notransition");
+            if (current_class === notransition[which]) button.classList.add("notransition");
         }
-        let current_class = button.className.split(' ')[0];
-        button.classList.add(to_cycle[which][current_class]);
-        button.classList.remove(current_class);
-        button.classList.remove("notransition");
-        if (current_class === notransition[which]) button.classList.add("notransition");
+        setTimeout(() => {
+            scrolling=false;
+        }, 1000);
     }
 }
 
 var scrolling = false;
 var ignore_amt = 0;
 next_div.addEventListener("scroll",(ev)=>{
-    console.log("scrolled!");
+    // console.log("scrolled!");
     if (!scrolling){
         if (ignore_amt === 0){
-            scrolling=true;
             cycle_buttons(next_div.scrollTop > 10? 1 : 0);
             next_div.style.overflowY = "hidden";
             setTimeout(() => {
-                scrolling=false;
+                // scrolling=false;
                 next_div.scrollTop = 10;
                 next_div.style.overflowY = "scroll";
                 ignore_amt+=1;
