@@ -12,6 +12,31 @@ html, body {
     justify-content: center;
     align-items: center;
     height: 100%;
+    transition: height 500ms;
+}
+
+#start.active{
+    height:20%;
+}
+
+#start-text-div {
+    width:500px;
+    height: 100px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    transition: background-color 1000ms, width 300ms, height 300ms;
+}
+
+#start-text-div.active {
+    background-color: rgb(20,20,20);
+}
+
+#start-text-div.active:hover {
+    height: 120px;
+    width: 520px;
+    cursor: pointer;
 }
 
 #start p{
