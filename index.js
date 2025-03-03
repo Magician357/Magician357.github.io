@@ -71,5 +71,63 @@ start_text_div.addEventListener("click",(ev)=>{
         start_div.classList.add("active");
         start_text_div.classList.remove("active");  
         started=false;
+        cycle_buttons()
+    }
+});
+
+const next_div = document.getElementById("next");
+
+const to_cycle = [
+    {
+        "pos1":"pos2",
+        "pos2":"pos3",
+        "pos3":"pos4",
+        "pos4":"pos5",
+        "pos5":"pos1"
+    },
+    {
+        "pos1":"pos5",
+        "pos2":"pos1",
+        "pos3":"pos2",
+        "pos4":"pos3",
+        "pos5":"pos4"
+    }
+];
+const notransition = [
+    "pos4",
+    "pos5"
+]
+
+function cycle_buttons(which=0){
+    for (const button of next_div.children){
+        if (button.id === "long"){
+            continue;
+        }
+        let current_class = button.className.split(' ')[0];
+        button.classList.add(to_cycle[which][current_class]);
+        button.classList.remove(current_class);
+        button.classList.remove("notransition");
+        if (current_class === notransition[which]) button.classList.add("notransition");
+    }
+}
+
+var scrolling = false;
+var ignore_amt = 0;
+next_div.addEventListener("scroll",(ev)=>{
+    console.log("scrolled!");
+    if (!scrolling){
+        if (ignore_amt === 0){
+            scrolling=true;
+            cycle_buttons(next_div.scrollTop > 10? 1 : 0);
+            next_div.style.overflowY = "hidden";
+            setTimeout(() => {
+                scrolling=false;
+                next_div.scrollTop = 10;
+                next_div.style.overflowY = "scroll";
+                ignore_amt+=1;
+            }, 1000);
+        } else {
+            ignore_amt -= 1;
+        }
     }
 });
