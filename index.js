@@ -70,12 +70,38 @@ start_text_div.addEventListener("click",(ev)=>{
     if (started){
         start_div.classList.add("active");
         start_text_div.classList.remove("active");  
+        next_div.classList.add("active");
         started=false;
         cycle_buttons()
     }
 });
 
 const next_div = document.getElementById("next");
+
+for (const button of next_div.children){
+    if (button.id === "long"){
+        continue;
+    }
+    button.onclick = (e) => {
+        if (e.target.tagName != "BUTTON"){
+            button.classList.add("active");
+            start_div.classList.add("hide");
+            next_div.classList.add("hide");
+        }
+    };
+    let close = button.getElementsByTagName("button")[0];
+    close.onclick = () => {
+        button.classList.remove("active");
+        start_div.classList.remove("hide");
+        next_div.classList.remove("hide");
+    }
+
+    let label = button.getElementsByClassName("label")[0];
+    let current = document.createElement("p");
+    current.innerText = label.innerText;
+    current.classList.add("fake-label");
+    button.appendChild(current);
+}
 
 const to_cycle = [
     {

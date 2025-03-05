@@ -20,18 +20,19 @@ html, body {
     align-items: center;
     height: 100%;
     width: 100%;
-    transition: height 1000ms;
-    z-index: 1000;
+    transition: height 1000ms, top 500ms;
+    z-index: 500;
     /* z-index: -1; */
     position: absolute;
     background-color: black;
     border-bottom: gray 1px solid;
+    top:0;
 }
 
 footer {
     position: fixed;
     background-color: black;
-    z-index: 999;
+    z-index: 499;
     border-top: gray 1px solid;
     bottom:0;
     width: 100%;
@@ -42,6 +43,10 @@ footer {
 
 #start.active{
     height:20%;
+}
+
+#start.hide {
+    top: -25%;
 }
 
 #start-text-div {
@@ -90,7 +95,7 @@ footer {
     position: absolute;
 }
 
-#next div {
+#next div:not(.content) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -98,19 +103,93 @@ footer {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    transition: top 1000ms;
+    transition: top 1000ms, width 500ms, height 500ms, background-color 1000ms, opacity 1000ms;
+}
+
+#next div:not(#long, .content){
+    background-color: rgb(20,20,20);
+    width: 400px;
+    border-radius: 20px;
+    height: 100px;
+    border: 1px solid rgb(30,30,30);
+    overflow: hidden;
+}
+
+#next div:not(#long,.content, .active):hover{
+    cursor: pointer;
+    width: 420px;
+}
+
+#next div.active {
+    width: 100% !important;
+    height: 100% !important;
+    top: 0;
+    background-color: black !important;
+    z-index: 1000;
+}
+
+#next.hide div:not(.active){
+    opacity: 0;
+}
+
+@keyframes label_blink {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 #next div .label {
     font-size: 30px;
-}
-
-#next div .content{
+    transition: top 500ms;
+    animation: label_blink 1.5s;
     display: none;
 }
 
-#next div .content.active {
-    display: block;
+.fake-label {
+    top: 0;
+    position: fixed;
+    font-size: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#next div.active .label {
+    top: 0;
+    position: absolute; 
+    animation: none;
+}
+
+.close {
+    visibility: hidden;
+    position:absolute
+}
+
+#next div.active .close {
+    top: 10px;
+    left: 10px;
+    position: fixed;
+    visibility: visible;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    z-index: 2000;
+}
+
+#next div .content{
+    position: absolute;
+    /* visibility: hidden; */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 500ms;
+    width: 100vw !important;    
+}
+
+#next div.active .content {
+    visibility: visible;
+    opacity: 1;
 }
 
 .pos1 {
@@ -126,15 +205,19 @@ footer {
 }
 
 .pos4 {
-    top: 90%;
+    top: 100%;
 }
 
 .pos5 {
-    top: 10%;
+    top: 0%;
 }
 
 .notransition {
-    transition: none !important;
+    transition: left 1000ms !important;
+}
+
+#next.hide .notransition {
+    left: -200%;
 }
 
 #nav {
