@@ -71,6 +71,7 @@ start_text_div.addEventListener("click",(ev)=>{
         start_div.classList.add("active");
         start_text_div.classList.remove("active");  
         next_div.classList.add("active");
+        next_div.scrollTop = 10;
         started=false;
         cycle_buttons()
     }

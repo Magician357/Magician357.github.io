@@ -181,15 +181,50 @@ footer {
 #next div .content{
     position: absolute;
     /* visibility: hidden; */
-    pointer-events: none;
     opacity: 0;
-    transition: opacity 500ms;
-    width: 100vw !important;    
+    transition: opacity 500ms, border-top 1000ms;
+    border-top: none;
+    width: 100vw !important;
+    text-align: center;
+    top: 100px;
+    height: calc(100% - 100px);
+    overflow-y: scroll;
+    scrollbar-color: #ccc #1c1c1c;
+    scrollbar-width: thin;
+}
+
+#next div:not(.active) .content {
+    pointer-events: none;
+}
+
+.content p, .content h1 {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width: calc(100% - 40px);
+    text-align: left;
+}
+
+.content p {
+    font-weight: 250;
+    text-wrap: pretty;
+}
+
+.content hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    /* margin: 1em 0; */
+    margin: 0 auto;
+    width: calc(100% - 30px);
 }
 
 #next div.active .content {
     visibility: visible;
     opacity: 1;
+    z-index: 5000;
+    border-top: 1px solid #ccc;
 }
 
 .pos1 {
